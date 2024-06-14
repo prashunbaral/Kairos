@@ -12,7 +12,8 @@ import { FormEvent, useState } from "react";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import { makeToast } from "@/utils/helper";
-import stripe, { loadStripe } from '@stripe/stripe-js';
+import BuyButton from "./BuyButton";
+import { signIn } from "next-auth/react";
 
 interface propsType {
     id: string;
@@ -40,6 +41,16 @@ const ProductCard = ({ id, img, category, title, price }: propsType) => {
 
     const handleBuyNow = async (e: FormEvent) => {
         e.preventDefault();
+
+
+        const handleSignIn = () => {
+            signIn("google"); 
+          };
+          
+        if (status !== 'authenticated') {
+            handleSignIn();
+            return; 
+        }
       
         const orderData = {
           id: id,
@@ -53,36 +64,13 @@ const ProductCard = ({ id, img, category, title, price }: propsType) => {
           const response = await axios.post("/api/add_order", orderData);
           const orderId = response.data.id; 
           makeToast("Order Placed Successfully")
-          
-          const stripePromise = loadStripe("pk_test_51P0dDDDjx1CAeQkrcs1uxNzUMpSnhIbPavZVP06hGOVWqTmz3GshKzufhp9vlsLuj9A9jYzno9qovAzg5SAvHxqC00PN2Kfzxt");    
-          
-          const createCheckoutSession = async () => {
-              const stripe = await stripePromise;
-              try{
-                const checkoutSession = await axios.post('/api/create-stripe-session', {
-                  title: title,
-                  price: price,
-              });
-              const sessionId = checkoutSession.data.id;
-              const result = await stripe?.redirectToCheckout({
-                sessionId,
-            });
-            if(result?.error) {
-                alert(result?.error.message)
-            }
-              } catch(err: any) {
-                console.log("Failed to fetch");
-                
-              }
-              
-          }
-
+            
           //window.location.href = "https://buy.stripe.com/test_6oEbIU8DNa8Q9vW6oo";
         } catch (err) {
           console.error("Error creating order:", err);
           toast.error("Something went wrong. Please try again later.");
         } finally {
-          dispatch(setLoading(false)); // Set loading state to false regardless of success or error
+          dispatch(setLoading(false));
         }
       };
       
@@ -117,9 +105,12 @@ const ProductCard = ({ id, img, category, title, price }: propsType) => {
                 </div>
                 
             </div>
-            <button className="bg-pink-500 hover:bg-blue-500 flex items-center justify-center p-2 cursor-pointer text-white w-[100px] ml-44 mb-2" onClick={handleBuyNow}>
-                <FaDollarSign /> Buy Now
+            <button >
+               <BuyButton 
+                img={img} category={category} price={price} title={title} priceId="price_1PRUavDjx1CAeQkrRXVbJpY7"
+            /> 
             </button>
+            
         </div>
     )
 }

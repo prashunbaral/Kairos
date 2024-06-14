@@ -1,57 +1,31 @@
-"use client";
+import Stripe from 'stripe';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { makeToast } from "@/utils/helper";
-import axios from "axios";
-import { NextRequest, NextResponse } from "next/server";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-interface propsType {
-    id: string;
-    img: string;
-    category: string;
-    title: string;
-    price: number;
-}
+export async function POST(request: NextRequest) {
+    try {
+        const data = await request.json();
+        console.log(data);
+        
+        const priceId = data.priceId;
+        const checkoutSession: Stripe.Checkout.Session = 
+        await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [
+              {
+                price: priceId,
+                quantity: 1
+              }
+            ],
+            mode: 'payment',
+            success_url: `${process.env.NEXT_BASE_URL}/billing`,
+            cancel_url: `${process.env.NEXT_BASE_URL}/billing`,
 
-const stripe = require ("stripe")(process.env.STRIPE_SECRET_KEY)
-
-async function CreateStripeSession (req: NextRequest, res: NextResponse, {  title, price }:propsType) {
-
-
-    // : paxi actual domain rakhne
-    const redirectionURL = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000': 'http://https://kairos-lac.vercel.app/'
-
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        axios
-            .get('/api/get_products')
-            .then((res) => {
-                console.log(res.data);
-                setProducts(res.data);
-            })
-            .catch((err) => console.log(err)
-            )
-    }, [])
-
-    const transformedProduct = {
-        price_data: {
-            current: 'Ca',
-            product_data: {
-                title: title,
-                price: price,
-            }
-        }
+          });
+          return NextResponse.json({result: checkoutSession, ok: true});
+    } catch (error) {
+        console.log(error);
+        return new NextResponse('Internal Sever', {status: 500})
     }
-
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [transformedProduct],
-        mode: 'payment',
-        success_url: redirectionURL + '?status=success' && makeToast("Order Placed Successfully"),
-        cancel_url: redirectionURL + '?status=cancel' && toast.error("An error occured"),
-    })
-
 }
