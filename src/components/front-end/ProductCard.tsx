@@ -58,19 +58,23 @@ const ProductCard = ({ id, img, category, title, price }: propsType) => {
           
           const createCheckoutSession = async () => {
               const stripe = await stripePromise;
-              const checkoutSession = await axios.post('/api/create-stripe-session', {
+              try{
+                const checkoutSession = await axios.post('/api/create-stripe-session', {
                   title: title,
                   price: price,
               });
-
               const sessionId = checkoutSession.data.id;
-
               const result = await stripe?.redirectToCheckout({
-                  sessionId,
-              });
-              if(result?.error) {
-                  alert(result?.error.message)
+                sessionId,
+            });
+            if(result?.error) {
+                alert(result?.error.message)
+            }
+              } catch(err: any) {
+                console.log("Failed to fetch");
+                
               }
+              
           }
 
           //window.location.href = "https://buy.stripe.com/test_6oEbIU8DNa8Q9vW6oo";
