@@ -21,7 +21,7 @@ async function CreateStripeSession (req: NextRequest, res: NextResponse, {  titl
 
     // : paxi actual domain rakhne
     const redirectionURL = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000': 'http://localhost:3000'
+    ? 'http://localhost:3000': 'http://https://kairos-lac.vercel.app/'
 
     const [products, setProducts] = useState([]);
 
