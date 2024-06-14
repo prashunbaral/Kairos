@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Loader from '@/components/admin-panel/Loader'
 import Login from '@/components/admin-panel/Login'
 import Sidebar from '@/components/admin-panel/Sidebar'
