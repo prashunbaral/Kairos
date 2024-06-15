@@ -1,5 +1,6 @@
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
+import { signIn, useSession } from "next-auth/react";
 import { FaDollarSign } from "react-icons/fa";
 
 type props = {
@@ -11,6 +12,12 @@ type props = {
 }
 
 const BuyButton = ({img, category, title, price, priceId}: props) => {
+
+    const { data: session, status } = useSession();
+    const handleSignIn = () => {
+        signIn("google"); 
+      };
+     
 
     const handleSubmit = async () => {
         const stripe = await loadStripe(
@@ -41,9 +48,19 @@ const BuyButton = ({img, category, title, price, priceId}: props) => {
     }
 
   return (
-    <div className="bg-pink-500 hover:bg-blue-500 flex items-center justify-center p-2 cursor-pointer text-white w-[100px] ml-44 mb-2" onClick={handleSubmit}>
-        <FaDollarSign /> Buy Now
-    </div>
+    <>
+        {status === 'authenticated' && (
+            <div className="bg-pink-500 hover:bg-blue-500 flex items-center justify-center p-2 cursor-pointer text-white w-[100px] ml-44 mb-2" onClick={handleSubmit}>
+                <FaDollarSign /> Buy Now
+            </div>
+        )}
+        {status === 'unauthenticated' && (
+            <div className="bg-pink-500 hover:bg-blue-500 flex items-center justify-center p-2 cursor-pointer text-white w-[100px] ml-44 mb-2" onClick={handleSignIn}>
+            <FaDollarSign /> Buy Now
+        </div>
+        )}
+    </>
+    
   )
 }
 

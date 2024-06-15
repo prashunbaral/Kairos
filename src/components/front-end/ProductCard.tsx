@@ -41,16 +41,6 @@ const ProductCard = ({ id, img, category, title, price }: propsType) => {
 
     const handleBuyNow = async (e: FormEvent) => {
         e.preventDefault();
-
-
-        const handleSignIn = () => {
-            signIn("google"); 
-          };
-          
-        if (status !== 'authenticated') {
-            handleSignIn();
-            return; 
-        }
       
         const orderData = {
           id: id,
@@ -105,7 +95,7 @@ const ProductCard = ({ id, img, category, title, price }: propsType) => {
                 </div>
                 
             </div>
-            <button >
+            <button onClick={handleBuyNow}>
                <BuyButton 
                 img={img} category={category} price={price} title={title} priceId="price_1PRUavDjx1CAeQkrRXVbJpY7"
             /> 
