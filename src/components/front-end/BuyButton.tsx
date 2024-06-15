@@ -1,5 +1,3 @@
-"use client";
-
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { FaDollarSign } from "react-icons/fa";
@@ -11,7 +9,6 @@ type props = {
     price: number;
     priceId: string;
 }
-
 
 const BuyButton = ({img, category, title, price, priceId}: props) => {
 
@@ -34,6 +31,7 @@ const BuyButton = ({img, category, title, price, priceId}: props) => {
             console.log(data);
             
             if(!data.ok) throw new Error("Something went wrong");
+            
             await stripe.redirectToCheckout({
                 sessionId: data.result.id
             });
