@@ -13,7 +13,7 @@ import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import { makeToast } from "@/utils/helper";
 import BuyButton from "./BuyButton";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 interface propsType {
     id: string;
@@ -25,6 +25,7 @@ interface propsType {
 
 const ProductCard = ({ id, img, category, title, price }: propsType) => {
 
+    // Add to Cart Functionality
     const dispatch = useAppDispatch();
 
     const addProductToCart = () => {
@@ -39,15 +40,23 @@ const ProductCard = ({ id, img, category, title, price }: propsType) => {
         toast.success("Added to Cart");
     }
 
+    // Posting orders in database and stripe integration
     const handleBuyNow = async (e: FormEvent) => {
+        const { data: session, status } = useSession();
+        if (!session || !session.user) {
+            console.error('User session not available.');
+            return;
+          }
+
         e.preventDefault();
       
         const orderData = {
-          id: id,
           imgSrc: img,
           name: title,
           status: "pending",
           price: price,
+          client: session.user?.name,
+          email: session.user?.email,
         };
       
         try {
@@ -55,13 +64,27 @@ const ProductCard = ({ id, img, category, title, price }: propsType) => {
           const orderId = response.data.id; 
           makeToast("Order Placed Successfully")
             
-          //window.location.href = "https://buy.stripe.com/test_6oEbIU8DNa8Q9vW6oo";
         } catch (err) {
           console.error("Error creating order:", err);
           toast.error("Something went wrong. Please try again later.");
         } finally {
           dispatch(setLoading(false));
         }
+
+        // stripe integration
+        const stripeData = [{
+            imgSrc: img,
+            name: title,
+            price: price,
+            quantity: 1,
+          }];
+
+          const response = await fetch("/api/create-stripe-session", {
+            method: "POST",
+            headers: {"Content-Type":"application/json"} ,
+            cache: "no-cache",
+            body: JSON.stringify({stripeData})
+        })
       };
       
       

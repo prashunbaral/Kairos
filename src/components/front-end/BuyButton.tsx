@@ -1,3 +1,4 @@
+import { POST } from "@/app/api/add_order/route";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { signIn, useSession } from "next-auth/react";
@@ -20,31 +21,31 @@ const BuyButton = ({img, category, title, price, priceId}: props) => {
      
 
     const handleSubmit = async () => {
-        const stripe = await loadStripe(
-            "pk_test_51P0dDDDjx1CAeQkrcs1uxNzUMpSnhIbPavZVP06hGOVWqTmz3GshKzufhp9vlsLuj9A9jYzno9qovAzg5SAvHxqC00PN2Kfzxt"
-        );
-        if(!stripe){
-            return;
-        }
-        try {
-            const response = await axios.post('/api/create-stripe-session', {
-                img:img,
-                category: category,
-                title: title,
-                price: price,
-                priceId: priceId,
-            });
-            const data = response.data;
-            console.log(data);
+        // const stripe = await loadStripe(
+        //     "pk_test_51P0dDDDjx1CAeQkrcs1uxNzUMpSnhIbPavZVP06hGOVWqTmz3GshKzufhp9vlsLuj9A9jYzno9qovAzg5SAvHxqC00PN2Kfzxt"
+        // );
+        // if(!stripe){
+        //     return;
+        // }
+        // try {
+        //     const response = await axios.post('/api/create-stripe-session', {
+        //         img:img,
+        //         category: category,
+        //         title: title,
+        //         price: price,
+        //         priceId: priceId,
+        //     });
+        //     const data = response.data;
+        //     console.log(data);
             
-            if(!data.ok) throw new Error("Something went wrong");
+        //     if(!data.ok) throw new Error("Something went wrong");
             
-            await stripe.redirectToCheckout({
-                sessionId: data.result.id
-            });
-        } catch (error) {
-            console.log(error);
-        }
+        //     await stripe.redirectToCheckout({
+        //         sessionId: data.result.id
+        //     });
+        // } catch (error) {
+        //     console.log(error);
+        // }
     }
 
   return (
