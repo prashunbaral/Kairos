@@ -32,14 +32,12 @@ const sucess = () => {
 =======
                   Youre happy now? Does this impulsive action is really going to
                   satisfy you? Dont answer me, answer yourself. Anyway, your
-                  Purchase is on it's way.
->>>>>>> 036abb7 (stripe integration)
+                  Purchase is on its way.
                 </p>
               </div>
               <div className="success-button-container">
                 <a href="/">
                   <button type="button" className="success-button-main">
-                    {" "}
                     Dismiss
                   </button>
                 </a>
