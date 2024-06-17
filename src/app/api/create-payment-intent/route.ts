@@ -38,7 +38,11 @@ export const POST = async (request:NextRequest)=>{
         const checkoutsession = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
+<<<<<<< HEAD
             success_url: 'http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}',
+=======
+            success_url: 'http://localhost:3000/sucess',
+>>>>>>> 49844e7 (added confirmation page)
             cancel_url: 'https://example.com/cancel?token='+customer.id,
             line_items: [
                 {
