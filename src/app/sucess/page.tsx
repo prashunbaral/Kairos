@@ -34,7 +34,7 @@ const sucess = ({ img, category, title, price, priceId }: props) => {
                 <p>
                   You're happy now? Does this impulsive action is really going
                   to satisfy you? Don't answer me, answer yourself. Anyway, your
-                  Purchase is on it's way.
+                  Order is on it's way.
                 </p>
               </div>
               <div className="success-button-container">
