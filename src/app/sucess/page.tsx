@@ -1,13 +1,6 @@
 "use client";
-type props = {
-  img: string;
-  category: string;
-  title: string;
-  price: number;
-  priceId: string;
-};
 
-const sucess = ({ img, category, title, price, priceId }: props) => {
+const sucess = () => {
   return (
     <div className="flex justify-center items-center mt-[15%]">
       <div className="notifications-container">
