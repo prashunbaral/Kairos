@@ -2,7 +2,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const Page = () => {
@@ -29,6 +29,7 @@ const Page = () => {
     confirmOrderCreate();
 
   return (
+    <Suspense fallback={<div>Loading ...</div>}>
     <div>
       {isError ? (
         <div className="h-screen w-full flex items-center justify-center">
@@ -43,6 +44,7 @@ const Page = () => {
         </div>
       )}
     </div>
+    </Suspense>
   );
 };
 
