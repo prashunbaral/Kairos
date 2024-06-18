@@ -1,13 +1,6 @@
 "use client";
-type props = {
-  img: string;
-  category: string;
-  title: string;
-  price: number;
-  priceId: string;
-};
 
-const sucess = ({ img, category, title, price, priceId }: props) => {
+const sucess = () => {
   return (
     <div className="flex justify-center items-center mt-[15%]">
       <div className="notifications-container">
@@ -32,15 +25,20 @@ const sucess = ({ img, category, title, price, priceId }: props) => {
               <p className="success-prompt-heading">Order completed</p>
               <div className="success-prompt-prompt">
                 <p>
+<<<<<<< HEAD
                   You're happy now? Does this impulsive action is really going
                   to satisfy you? Don't answer me, answer yourself. Anyway, your
                   Order is on it's way.
+=======
+                  Youre happy now? Does this impulsive action is really going to
+                  satisfy you? Dont answer me, answer yourself. Anyway, your
+                  Purchase is on its way.
+>>>>>>> 4b88720e11ec0113cae4f7de0c5df74108bf6cf2
                 </p>
               </div>
               <div className="success-button-container">
                 <a href="/">
                   <button type="button" className="success-button-main">
-                    {" "}
                     Dismiss
                   </button>
                 </a>
