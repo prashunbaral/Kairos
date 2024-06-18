@@ -10,6 +10,7 @@ interface IOrderDetails {
         images: [string],
         description: string
         price: string
+        clientName: string
 }
 
 export async function POST(request: NextRequest) {
@@ -33,7 +34,9 @@ export async function POST(request: NextRequest) {
             name: orderDetails.name,
             imgSrc: orderDetails.images[0],
             status: "completed",
-            price: orderDetails.price
+            price: orderDetails.price,
+            customerName: session.customer_details?.name,
+            customerEmail: session.customer_details?.email
         })
 
         if(createCompleteOrder) {

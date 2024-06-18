@@ -38,41 +38,6 @@ const ProductCard = ({ id, img, category, title, price }: propsType) => {
         dispatch(addToCart(payload));
         toast.success("Added to Cart");
     }
-
-    const handleBuyNow = async (e: FormEvent) => {
-        e.preventDefault();
-
-
-        const handleSignIn = () => {
-            signIn("google"); 
-          };
-          
-        if (status !== 'authenticated') {
-            handleSignIn();
-            return; 
-        }
-      
-        const orderData = {
-          id: id,
-          imgSrc: img,
-          name: title,
-          status: "pending",
-          price: price,
-        };
-      
-        try {
-          const response = await axios.post("/api/add_order", orderData);
-          const orderId = response.data.id; 
-          makeToast("Order Placed Successfully")
-            
-          //window.location.href = "https://buy.stripe.com/test_6oEbIU8DNa8Q9vW6oo";
-        } catch (err) {
-          console.error("Error creating order:", err);
-          toast.error("Something went wrong. Please try again later.");
-        } finally {
-          dispatch(setLoading(false));
-        }
-      };
       
       
     return (

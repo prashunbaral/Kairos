@@ -13,6 +13,7 @@ export const POST = async (request:NextRequest)=>{
 
     try{
         const data:bodyData = await request.json();
+        
         const productDetails = {
             name: data.name,
             images: [data.image],
