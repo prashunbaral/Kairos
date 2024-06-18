@@ -27,7 +27,11 @@ const BuyButton = ({ img, category, title, price, priceId }: props) => {
       });
       const data = response.data;
       console.log(data);
-      window.location.href = data.url;
+
+      // const stripeSessionRetrived = await axios.post('/api/stripe-sessions', { stripeId: data.msg.id })
+      // console.log("retriveds session", stripeSessionRetrived)
+
+      window.location.href = data.url; 
       if (!data.ok) throw new Error("Something went wrong");
       const stripe = await loadStripe(
         "pk_test_51P0dDDDjx1CAeQkrcs1uxNzUMpSnhIbPavZVP06hGOVWqTmz3GshKzufhp9vlsLuj9A9jYzno9qovAzg5SAvHxqC00PN2Kfzxt"
@@ -36,7 +40,7 @@ const BuyButton = ({ img, category, title, price, priceId }: props) => {
         return;
       }
       await stripe.redirectToCheckout({
-        sessionId: data.result.id,
+        sessionId: data.msg.id,
       });
     } catch (e: any) {
       console.log(e);
@@ -66,6 +70,7 @@ const BuyButton = ({ img, category, title, price, priceId }: props) => {
       await stripe.redirectToCheckout({
         sessionId: data.result.id,
       });
+
     } catch (error) {
       console.log(error);
     }

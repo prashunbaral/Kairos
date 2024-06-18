@@ -13,9 +13,16 @@ export const POST = async (request:NextRequest)=>{
 
     try{
         const data:bodyData = await request.json();
+        const productDetails = {
+            name: data.name,
+            images: [data.image],
+            description: data.description,
+            price: data.price
+
+        }
+        
 
         const customer = await stripe.customers.create({
-
             email: "customer@example.com",
             address: {
                 city: "Bangalore",
@@ -31,7 +38,7 @@ export const POST = async (request:NextRequest)=>{
         const checkoutsession = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            success_url: 'http://localhost:3000/success',
+            success_url: 'http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}',
             cancel_url: 'https://example.com/cancel?token='+customer.id,
             line_items: [
                 {
@@ -41,13 +48,19 @@ export const POST = async (request:NextRequest)=>{
                             name: data.name,
                             images: [data.image],
                             description: data.description,
-                            
                         },
                         currency: 'usd',
                         unit_amount: data.price * 100,
                     },
-                }]
+                }],
+            metadata: {
+                 description: JSON.stringify(productDetails)
+            }
         });
+        console.log("Hello after session")
+
+        
+        
         return NextResponse.json({msg:checkoutsession , url: checkoutsession.url}, {status: 200})
 
     }catch(e:any){
