@@ -25,11 +25,6 @@ const sucess = () => {
               <p className="success-prompt-heading">Order completed</p>
               <div className="success-prompt-prompt">
                 <p>
-<<<<<<< HEAD
-                  You're happy now? Does this impulsive action is really going
-                  to satisfy you? Don't answer me, answer yourself. Anyway, your
-                  Order is on it's way.
-=======
                   Youre happy now? Does this impulsive action is really going to
                   satisfy you? Dont answer me, answer yourself. Anyway, your
                   Purchase is on its way.
