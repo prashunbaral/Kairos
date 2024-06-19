@@ -1,38 +1,84 @@
 "use client"
 
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { OrderState } from '@/redux/features/orderSlice';
+import OrderRow from "@/components/admin-panel/OrderRow";
+import { setLoading } from "@/redux/features/loadingSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-interface RootState {
-  order: OrderState;
-}
-
-interface propsType {
-  id: string;
-  img: string;
+export interface IOrder {
+  _id:string;
+  imgSrc: string;
+  name: string;
   status: string;
-  title: string;
-  price: number;
+  price: string;
+  customerName: string;
+  customerEmail: string;
+  shippingAddress: string;
 }
 
 const Orders = () => {
-  const selectedProduct = useSelector((state: RootState) => state.order.selectedProduct);
+  const [orders, setOrders] = useState([]);
+  const dispatch = useAppDispatch();
+  
+  useEffect(() => {
+    dispatch(setLoading(true))
+
+    axios
+      .get('/api/get_order')
+      .then((res) => {
+        setOrders(res.data);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => dispatch(setLoading(false)))
+  }, [])
+
   return (
     <div>
-      {selectedProduct ? (
-        <div>
-          <h2>Order Details</h2>
-          <p>Product ID: {selectedProduct.id}</p>
-          <p>Product Title: {selectedProduct.title}</p>
-          <p>Product Price: ${selectedProduct.price}</p>
-          {/* Add buttons or forms for processing the order */}
+      <div className="bg-white h-[calc(100vh-96px)] rounded-lg p-4">
+        <h2 className='text-3xl'>
+          All Products
+        </h2>
+        <div className='mt-4 h-[calc(100vh-180px)] overflow-y-auto'>
+            <table className='w-full'>
+                <thead>
+                  <tr className='text-gray-500 border-t border-[#ececec]'>
+                    <th>
+                        SR No.
+                    </th>
+                    <th>
+                      Name
+                    </th>
+                    <th>
+                      Images
+                    </th>
+                    <th>
+                      Client Name
+                    </th>
+                    <th>
+                      Email
+                    </th>
+                    <th>
+                      Address
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    orders.map((order: IOrder, index) => (
+                      <OrderRow 
+                        key={order._id}
+                        srNo={index+1}
+                        order={order}
+                      />
+                    ))
+                  }
+                </tbody>
+            </table>
         </div>
-      ) : (
-        <p>No product selected yet.</p>
-      )}
+      </div>
     </div>
-  );
+  )
 }
 
-export default Orders
+export default Orders;
