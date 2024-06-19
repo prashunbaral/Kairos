@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import axios from "axios";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -8,22 +7,23 @@ import toast from "react-hot-toast";
 
 const Page = () => {
   const [isError, setIsError] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);  
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const getSessionId = async () => {
+    // Function to fetch session ID asynchronously
+    const fetchSessionId = async () => {
       const session_id = searchParams.get("session_id");
       setSessionId(session_id);
     };
 
-    getSessionId();
+    fetchSessionId(); // Call the function to fetch session ID
   }, [searchParams]);
 
   const confirmOrderCreate = async () => {
     try {
       if (!sessionId) {
-        return;
+        return; // If session ID is null, do not proceed
       }
 
       const response = await axios.post("/api/stripe-sessions", {
@@ -39,12 +39,12 @@ const Page = () => {
 
   useEffect(() => {
     if (sessionId) {
-      confirmOrderCreate();
+      confirmOrderCreate(); // Call confirmOrderCreate when session ID is set
     }
   }, [sessionId]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<p>Loading...</p>}>
       <div>
         {isError ? (
           <div className="h-screen w-full flex items-center justify-center">
