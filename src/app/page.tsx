@@ -18,7 +18,6 @@ export default function Home({
   };
 }) {
   const query = searchParams?.query || '';
-  console.log("query", query);
   
 
   const [showCart, setShowCart] = useState(false)

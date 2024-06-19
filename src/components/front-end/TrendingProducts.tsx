@@ -20,7 +20,6 @@ const TrendingProducts = () => {
         axios
             .get('/api/get_products')
             .then((res) => {
-                console.log(res.data);
                 setProducts(res.data);
             })
             .catch((err) => console.log(err)

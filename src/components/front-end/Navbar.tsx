@@ -16,8 +16,6 @@ interface PropsType {
 const Navbar = ({ setShowCart }: PropsType, searchParams: { query?: string } = {}) => {
 
   const query = searchParams?.query || '';
-  console.log("query", query);
-    
 
   const cartCount = useAppSelector((state) => state.cartReducer.length);
   const { data: session, status } = useSession();
