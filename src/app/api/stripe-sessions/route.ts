@@ -25,16 +25,15 @@ export async function POST(request: NextRequest) {
   const description = JSON.parse(orderMetaData);
   const orderDetails: IOrderDetails = JSON.parse(description.description);
 
-  // Check for existing order before creating a new one
+
   const existingOrder = await Order.findOne({ sessionId });
   if (existingOrder) {
     console.log("Order already exists:", existingOrder);
-    // Handle duplicate order scenario (e.g., inform user or log the event)
     return NextResponse.json("Order already placed", { status: 200 });
   }
 
   if (session.status?.toLowerCase() === "complete" && !existingOrder?.completed) {
-    // Proceed with order creation logic only if order is complete and doesn't exist yet
+
     const createCompleteOrder = await Order.create({
       name: orderDetails.name,
       imgSrc: orderDetails.images[0],
