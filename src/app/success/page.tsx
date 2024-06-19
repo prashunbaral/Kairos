@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import axios from "axios";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -7,26 +8,36 @@ import toast from "react-hot-toast";
 
 const Page = () => {
   const [isError, setIsError] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null); // Define sessionId as string or null
   const searchParams = useSearchParams();
 
-  const sessionId = searchParams.get("session_id");
+  useEffect(() => {
+    const session_id = searchParams.get("session_id");
+    setSessionId(session_id); // session_id can be string or null, matches the type string | null
+  }, [searchParams]);
 
   const confirmOrderCreate = async () => {
     try {
+      if (!sessionId) {
+        return; // Guard clause if sessionId is null, do nothing
+      }
+
       const response = await axios.post("/api/stripe-sessions", {
         sessionId,
       });
-      // const data = await response.json(
-      console.log(response);
       toast.success(response.data);
-      console.log("Response", response.data);
     } catch (error) {
       setIsError(true);
       toast.error("Error storing data in database");
       console.log("Axios Error", error);
     }
   };
-  confirmOrderCreate();
+
+  useEffect(() => {
+    if (sessionId) {
+      confirmOrderCreate();
+    }
+  }, [sessionId]);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
