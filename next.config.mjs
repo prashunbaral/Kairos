@@ -10,6 +10,11 @@ const nextConfig = {
           protocol: 'https', 
           hostname: 'utfs.io',
         },
+        module.exports = {
+          experimental: {
+            missingSuspenseWithCSRBailout: false,
+          },
+        }
       ],
     },
   };
