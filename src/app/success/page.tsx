@@ -8,18 +8,22 @@ import toast from "react-hot-toast";
 
 const Page = () => {
   const [isError, setIsError] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null); // Define sessionId as string or null
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const session_id = searchParams.get("session_id");
-    setSessionId(session_id); // session_id can be string or null, matches the type string | null
+    const getSessionId = async () => {
+      const session_id = searchParams.get("session_id");
+      setSessionId(session_id);
+    };
+
+    getSessionId();
   }, [searchParams]);
 
   const confirmOrderCreate = async () => {
     try {
       if (!sessionId) {
-        return; // Guard clause if sessionId is null, do nothing
+        return;
       }
 
       const response = await axios.post("/api/stripe-sessions", {
