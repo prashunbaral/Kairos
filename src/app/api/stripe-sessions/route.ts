@@ -42,6 +42,7 @@ export async function POST(request: NextRequest) {
       price: orderDetails.price,
       customerName: session.customer_details?.name,
       customerEmail: session.customer_details?.email,
+      shippingAddress: session.customer_details?.address,
     });
 
     if (createCompleteOrder) {

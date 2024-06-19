@@ -42,26 +42,30 @@ export const POST = async (request:NextRequest)=>{
             success_url: 'http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}',
             cancel_url: 'https://example.com/cancel?token='+customer.id,
             line_items: [
-                {
-                    quantity: 1,
-                    price_data: {
-                        product_data: {
-                            name: data.name,
-                            images: [data.image],
-                            description: data.description,
-                        },
-                        currency: 'usd',
-                        unit_amount: data.price * 100,
-                    },
-                }],
+              {
+                quantity: 1,
+                price_data: {
+                  product_data: {
+                    name: data.name,
+                    images: [data.image],
+                    description: data.description,
+                  },
+                  currency: 'usd',
+                  unit_amount: data.price * 100,
+                },
+              }
+            ],
+            billing_address_collection: 'required',
+            shipping_address_collection: {
+              allowed_countries: ['CA', 'US'],
+            },
             metadata: {
-                 description: JSON.stringify(productDetails)
+              description: JSON.stringify(productDetails)
             }
-        });
+          });
+          
         console.log("Hello after session")
-
-        
-        
+  
         return NextResponse.json({msg:checkoutsession , url: checkoutsession.url}, {status: 200})
 
     }catch(e:any){
