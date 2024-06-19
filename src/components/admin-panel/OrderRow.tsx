@@ -1,6 +1,4 @@
 import { IOrder } from "@/app/admin/orders/page";
-import { setLoading } from "@/redux/features/loadingSlice";
-import { useAppDispatch } from "@/redux/hooks";
 import Image from "next/image";
 
 interface PropsType {
@@ -10,25 +8,22 @@ interface PropsType {
 
 const OrderRow = ({ srNo, order }:PropsType) => {
     console.log(order)
+    const parsedShippingAddress = JSON.parse(order.shippingAddress)
     
     return (
         <tr>
             <td>
-                <div>
-                    {srNo}
-                </div>
+                {srNo}
             </td>
             <td>
-                <div>
-                    {order.name}
-                </div>
+                {order.name}
             </td>
-            <td className="py-2">
+            <td className="py-2 flex justify-center">
                 <Image src={order.imgSrc} width={40} height={40} alt="order_image" />
             </td>
             <td>{order.customerName}</td>
             <td>{order.customerEmail}</td>
-            <td>{order.shippingAddress}</td>
+            <td>{parsedShippingAddress.line1}, {parsedShippingAddress.city}-{parsedShippingAddress.postal_code}, {parsedShippingAddress.country}</td>
         </tr>
     )
     

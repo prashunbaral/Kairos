@@ -42,7 +42,7 @@ const Dashboard = () => {
           All Products
         </h2>
         <div className='mt-4 h-[calc(100vh-180px)] overflow-y-auto'>
-            <table className='w-full'>
+            <table className='w-full text-center'>
                 <thead>
                   <tr className='text-gray-500 border-t border-[#ececec]'>
                     <th>
