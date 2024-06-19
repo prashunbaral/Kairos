@@ -65,7 +65,9 @@ export const POST = async (request:NextRequest)=>{
           });
           
         console.log("Hello after session")
-  
+
+        
+        
         return NextResponse.json({msg:checkoutsession , url: checkoutsession.url}, {status: 200})
 
     }catch(e:any){

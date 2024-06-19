@@ -17,6 +17,22 @@ const orderSchema = new Schema({
         type: String,
         require: true,
     },
+    customerName: {
+        type: String,
+        require: true,
+    },
+    customerEmail: {
+        type: String,
+        require: true,   
+    },
+    shippingAddress: {
+        type: String,
+        require: true,
+    }, 
+    customerPhone: {
+        type: Number,
+        require: true,
+    }
 });
 
 const anOrder = models.Order || model("Order", orderSchema);
