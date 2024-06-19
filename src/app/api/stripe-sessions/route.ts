@@ -21,6 +21,13 @@ export async function POST(request: NextRequest) {
   const session = await stripe.checkout.sessions.retrieve(sessionId);
 
   console.log("Session from server", session);
+  console.log("first", session.customer_details?.address, typeof session.customer_details?.address)
+
+  const address = JSON.stringify(session.customer_details?.address)
+  // const address = JSON.parse(temp)
+
+
+
   const orderMetaData = JSON.stringify(session.metadata);
   const description = JSON.parse(orderMetaData);
   const orderDetails: IOrderDetails = JSON.parse(description.description);
@@ -33,7 +40,6 @@ export async function POST(request: NextRequest) {
   }
 
   if (session.status?.toLowerCase() === "complete" && !existingOrder?.completed) {
-
     const createCompleteOrder = await Order.create({
       name: orderDetails.name,
       imgSrc: orderDetails.images[0],
@@ -41,7 +47,7 @@ export async function POST(request: NextRequest) {
       price: orderDetails.price,
       customerName: session.customer_details?.name,
       customerEmail: session.customer_details?.email,
-      shippingAddress: session.customer_details?.address,
+      shippingAddress: address,
     });
 
     if (createCompleteOrder) {
