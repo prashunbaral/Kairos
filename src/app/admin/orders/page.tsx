@@ -19,6 +19,8 @@ export interface IOrder {
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [updateTable, setUpdateTable] = useState(false);
+
   const dispatch = useAppDispatch();
   
   useEffect(() => {
@@ -31,7 +33,7 @@ const Orders = () => {
       })
       .catch((err) => console.log(err))
       .finally(() => dispatch(setLoading(false)))
-  }, [])
+  }, [updateTable])
 
   return (
     <div>
@@ -61,6 +63,9 @@ const Orders = () => {
                     <th>
                       Address
                     </th>
+                    <th>
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -70,6 +75,7 @@ const Orders = () => {
                         key={order._id}
                         srNo={index+1}
                         order={order}
+                        setUpdateTable={setUpdateTable}
                       />
                     ))
                   }
