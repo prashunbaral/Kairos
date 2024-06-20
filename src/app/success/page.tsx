@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 const Page = () => {
   const [isError, setIsError] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null);  
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
   useEffect(() => {
