@@ -43,7 +43,7 @@ const OrderRow = ({ srNo, order, setUpdateTable }:PropsType) => {
             <td>{order.customerEmail}</td>
             <td>{parsedShippingAddress.line1}, {parsedShippingAddress.city}-{parsedShippingAddress.postal_code}, {parsedShippingAddress.country}</td>
             <div className="flex justify-center">
-            <RiDeleteBin5Line className="text-[20px] cursor-pointer hover:text-red-600" onClick={onDelete} />
+            <RiDeleteBin5Line className="text-[20px] cursor-pointer hover:text-red-600 relative top-[-11px]" onClick={onDelete} />
             </div>
         </tr>
     )
