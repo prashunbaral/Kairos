@@ -28,10 +28,10 @@ const NewArrivals = () => {
 
   return (
     <div className="container mt-32" id="NewArrivals">
-      <div className="sm:flex justify-between items-center">
+      <div className="sm:flex justify-between items-center bg-[#a72f04] p-2 text-white">
         <h2 className="text-4xl font-medium">New Arrivals</h2>
-        <div className="text-gray-500 flex gap-4 text-xl mt-4 sm:mt-0">
-          <p className="text-gray-600 italic">“ Discover the latest trends ”</p>
+        <div className="text-gray-300 flex gap-4 text-xl mt-4 sm:mt-0">
+          <p className="text-gray-300 italic">“ Discover the latest trends ”</p>
         </div>
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-8">

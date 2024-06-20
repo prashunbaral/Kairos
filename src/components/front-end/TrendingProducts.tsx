@@ -27,13 +27,13 @@ const TrendingProducts = () => {
     }, [])
   return (
     <div className="container mt-32" id="Products">
-        <div className="sm:flex justify-between items-center">
+        <div className="sm:flex justify-between items-center bg-[#a72f04] p-2 text-white">
             <h2 className="text-4xl font-medium">
                 Our Products
             </h2>
 
-            <div className="text-gray-500 flex gap-4 text-xl mt-4 sm:mt-0">
-                <p className="text-gray-600 italic">
+            <div className="text-gray-300 flex gap-4 text-xl mt-4 sm:mt-0">
+                <p className="text-gray-300 italic">
                     “ A step towards a healthy future ”
                 </p>
             </div>
