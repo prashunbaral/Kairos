@@ -7,10 +7,10 @@ export async function PUT(request: NextRequest, URLParams: any) {
 
         const body = await request.json();
         const id = URLParams.params.id;
-        const { name, category, price } = body;
+        const { name, category, price, navCategory, subNavCategory } = body;
 
         await connectMongoDB();
-        console.log(id, name, category, price);
+        console.log(id, name, category, price, navCategory, subNavCategory);
         
         const data = await Product.findByIdAndUpdate(id, {
             name, category, price

@@ -14,6 +14,8 @@ interface IPayload {
     name: string;
     category: string;
     price: string;
+    navCategory: string;
+    subNavCategory: string;
 }
 
 const ProductForm = () => {
@@ -24,6 +26,8 @@ const ProductForm = () => {
         name: "",
         category: "",
         price: "",
+        navCategory: "",
+        subNavCategory: "",
     })
 
     const dispatch = useAppDispatch()
@@ -32,6 +36,8 @@ const ProductForm = () => {
         e.preventDefault();
 
         dispatch(setLoading(true));
+        console.log(payload);
+        
         
         axios.post("/api/add_product", payload).then(res => {
             makeToast("Product Added Successfully")
@@ -41,6 +47,8 @@ const ProductForm = () => {
                 name: "",
                 category: "",
                 price: "",
+                navCategory: "",
+                subNavCategory: "",
             })
         }).catch(err => console.log(err)
         ).finally(() => dispatch(setLoading(false)))
@@ -89,6 +97,24 @@ const ProductForm = () => {
                 Product Price
             </label>
             <input className='bg-gray-300 w-full px-4 py-2 border outline-pink rounded-md' type='text' value={payload.price} onChange={(e) => setPayload({...payload, price: e.target.value})}
+                required
+            />
+        </div>
+
+        <div>
+            <label className='block ml-1'>
+                Product Category
+            </label>
+            <input className='bg-gray-300 w-full px-4 py-2 border outline-pink rounded-md' type='text' value={payload.navCategory} onChange={(e) => setPayload({...payload, navCategory: e.target.value})}
+                required
+            />
+        </div>
+
+        <div>
+            <label className='block ml-1'>
+                Product SubCategory
+            </label>
+            <input className='bg-gray-300 w-full px-4 py-2 border outline-pink rounded-md' type='text' value={payload.subNavCategory} onChange={(e) => setPayload({...payload, subNavCategory: e.target.value})}
                 required
             />
         </div>

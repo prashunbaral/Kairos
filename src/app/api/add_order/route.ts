@@ -6,11 +6,11 @@ export async function POST(request: NextRequest) {
     try {
 
         const body = await request.json();
-        const { id, imgSrc, name, status, price } = body;
+        const { id, imgSrc, name, status, price, navCategory, subNavCategory } = body;
 
         await connectMongoDB()
         const data = await Order.create({
-            id, imgSrc, name, status, price
+            id, imgSrc, name, status, price, navCategory, subNavCategory
         })
         return NextResponse.json({msg: "Order Placed Successfully", data});
     } catch (error) {

@@ -1,24 +1,22 @@
-import { useAppSelector } from '@/redux/hooks';
+// Navbar.tsx
+
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { FaShoppingCart } from "react-icons/fa";
 import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaTiktok } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa";
+import DropdownMenu from './DropDownMenu'; // Adjust the import path based on your project structure
+import { useAppSelector } from '@/redux/hooks';
 
 interface PropsType {
   setShowCart: Dispatch<SetStateAction<boolean>>;
 }
 
 const Navbar = ({ setShowCart }: PropsType, searchParams: { query?: string } = {}) => {
-
   const query = searchParams?.query || '';
-
   const cartCount = useAppSelector((state) => state.cartReducer.length);
   const { data: session, status } = useSession();
+  const [activeMenu, setActiveMenu] = useState<string | null>(null); // State to track active menu
 
   const handleSignIn = () => {
     signIn("google"); 
@@ -29,40 +27,50 @@ const Navbar = ({ setShowCart }: PropsType, searchParams: { query?: string } = {
       <div className="container">
         <div className="flex justify-between items-center">
           <div className="text-4xl font-bold">Kairos</div>
-          {/* <SearchBar /> */}
-          <div className='text-black flex justify-center ml-32'> {/* Center navigation elements */}
-            <Link
-              href="#Products"
-              className='font-bold hover:text-blue-500 mt-1'
-            >
-              Products
-            </Link>
+          <div className='text-black flex justify-center ml-16'>
+            <Link href="#" className='font-bold hover:text-blue-500 mt-1'>Home</Link>
+            <Link href="#" className='font-bold hover:text-blue-500 mt-1 ml-5'>About Us</Link>
+            <DropdownMenu
+              triggerText="Yoga"
+              menuItems={["Asana Essentials", "Pranayama Provisions", "Surya Spirit","Mudra Mastery","Vinyasa Vitality","Namaste Necessities", "Sanskrit Serentity", "Gyan Yoga Gear", "Kundalini Collection", "Bhakti Bliss", "Yoga Sutra Selects", "Moksha Moments"]}
+              setActive={setActiveMenu}
+              activeItem={activeMenu}
+            />
+            <DropdownMenu
+              triggerText="Meditation"
+              menuItems={["Dhyanam Delights","Tranquility Tools", "Chakra Harmony", "Mantra Magic", "Shanti Sanctuary", "Yogic Bliss", "Mindfulness Must-Haves", "Zen Zone"]}
+              setActive={setActiveMenu}
+              activeItem={activeMenu}
+            />
+            <DropdownMenu
+              triggerText="Devotion and Deities"
+              menuItems={["Lord Ganesh Grace","Lord Shiva Reverence", "Lord Vishnu's Vaikuntha Veneration", "Goddess Durga Shakti Sadhana", "Lord Bhairav Bhakti", "Goddess Bhairavi Blessings", "Goddess Kali", "Goddess Dhanalaxmi Light", "Goddess Saraswati Virtue", "Lord Hanuman Harmony", "Lord Vithlal Prayers", "Lord Ayappa Abode", "Lord Murugan Might", "Surya Dev Serene", "Shani Dev Serenity", "Mangal Dev Mangalya", "Rahu Rahasya", "Ketu Kalyan"]}
+              setActive={setActiveMenu}
+              activeItem={activeMenu}
+            />
 
-            <Link
-              href="#NewArrivals"
-              className='font-bold hover:text-blue-500 ml-5 mt-1'
-            >
-              New Arrivals
-            </Link>
+            <DropdownMenu
+              triggerText="Vedic Scriptures"
+              menuItems={["Bhakti Bibliotheca", "Vedic Wisdom", "Puranix Tales", "Upanishadic Insights", "Bhagvad Gita Treasury", "Ramayana Recollections", "Mahabharata Masterpieces", "Shashtra Shelf", "Tantric Treatises", "Devotional Discourses", "Mantra Compendiums", "Sanskrit Scriptures", "Pilgrimage Pages", "Saints and Sages", "Astrological Almanacs", "Ayurvedic Almanacs", "Ayurvedic Aids", "Goddess Grimoire", "Karma Chroniclas", "Bhajan Booklets", "Vedanta Vault"]}
+              setActive={setActiveMenu}
+              activeItem={activeMenu}
+            />
 
-            <Link
-              href="#ContactUs"
-              className='font-bold hover:text-blue-500 ml-5 mt-1'
-            >
-              Contact Us
-            </Link>
-
-            <div className='flex space-x-5 ml-64 mr-6'> 
+            <DropdownMenu
+              triggerText="Vedic Festive Supplies"
+              menuItems={["Diwali Delights: Festival of Lights Celebrations", "Holi Happiness: Festival of Colors Essentials", "Navratri Necessities: Nine Nights of Worship", "Durga Puja Pandal: Celebrating the Goddess", "Janmashtami Joy: Lord Krishna's Birthday Celebrations", "Ganesh Chaturthi Gear: Welcoming the Elephant God", "Ram Navami Revelry: Lord Rama's Birth Celebrations", "Makar Sankranti Must-Haves: Harvest Festival Essentials", "Pongal Preparations: Tamil Harvest Festival Supplies", "Onam Offerings: Kerala Harvest Festival Traditions", "Baisakhi Bazaar: Sikh New Year Celebrations", "Guru Purnima Goods: Honoring Spiritual Gurus", "Maha Shivaratri Supplies: Night of Lord Shiva Worship", "Vasant Panchami Picks: Saraswati Puja Essentials", "Karva Chauth Collections: Spousal Bonding Rituals", "Gudi Padwa Gear: Maharashtrian New Year Celebrations", "Chhath Puja Preparations: Sun God Worship Traditions", "Bonalu Basics: Telangana's Goddess Mahakali Festival"]}
+              setActive={setActiveMenu}
+              activeItem={activeMenu}
+            />
+            {/* <div className='flex space-x-5 ml-40'>
               <FaFacebook href='#' className='cursor-pointer size-8 hover:text-blue-500' />
               <FaInstagram href='#' className='cursor-pointer size-8 hover:text-blue-500' />
               <FaYoutube href='#' className='cursor-pointer size-8 hover:text-blue-500' />
               <FaTiktok href='#' className='cursor-pointer size-8 hover:text-blue-500' />
-            </div>
+            </div> */}
           </div>
-
           <div className='flex gap-4 md:gap-8 items-center'>
             <div className='md:flex hidden gap-3'>
-              {/* User authentication section */}
               {status === 'loading' && (
                 <p className='text-gray-500'>Loading...</p>
               )}

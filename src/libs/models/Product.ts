@@ -21,6 +21,17 @@ const productSchema = new Schema({
         type: String,
         require: true,
     },
+    navCategory: {
+        type: String,
+        require: true,
+        default: "nothing"
+    },
+    subNavCategory: {
+        type: String,
+        require: true,
+        default: "nothing"
+
+    }
 });
 
 const Product = models.Product || model("Product", productSchema);
