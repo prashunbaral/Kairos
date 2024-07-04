@@ -73,9 +73,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
                       // router.push(
                       //   `/categories?category=${item.replace(" ", "-")}`
                       // );
-                      window.location.href = `/categories?category=${item.replace(
-                        " ",
-                        "-"
+                      window.location.href = `/categories?category=${encodeURIComponent(
+                        item
                       )}`;
                       setActive(item);
                       setIsOpen(false);

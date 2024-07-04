@@ -18,7 +18,7 @@ interface ICategory {
 
 const Page = () => {
   const [products, setProducts] = useState<ICategory[]>([]);
-  const [categoryParam, setCategoryParam] = useState<string | null>(null);
+  const [categoryParam, setCategoryParam] = useState("");
   const [showCart, setShowCart] = useState(false);
   let nestedProducts: ICategory[] = [];
   useEffect(() => {
@@ -36,7 +36,7 @@ const Page = () => {
     if (typeof window !== "undefined") {
       urlParams = new URLSearchParams(window.location.search);
       const categoryParam = urlParams.get("category");
-      setCategoryParam(categoryParam);
+      setCategoryParam(categoryParam ?? "");
     }
   }, []);
 
@@ -44,7 +44,7 @@ const Page = () => {
   //   const categoryParam = urlParams.get("category");
 
   for (let i = 0; i < products.length; i++) {
-    if (products[i].subNavCategory.replace(" ", "-") == categoryParam) {
+    if (products[i].subNavCategory == decodeURIComponent(categoryParam)) {
       nestedProducts.push(products[i]);
     }
   }
