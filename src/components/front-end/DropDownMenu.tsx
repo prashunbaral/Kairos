@@ -1,6 +1,8 @@
 // DropdownMenu.tsx
-
-import React, { useState, useRef, useEffect } from 'react';
+"use client";
+import { url } from "inspector";
+import { useRouter } from "next/navigation";
+import React, { useState, useRef, useEffect } from "react";
 
 interface DropdownMenuProps {
   triggerText: string;
@@ -9,7 +11,12 @@ interface DropdownMenuProps {
   activeItem: string | null;
 }
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({ triggerText, menuItems, setActive, activeItem }) => {
+const DropdownMenu: React.FC<DropdownMenuProps> = ({
+  triggerText,
+  menuItems,
+  setActive,
+  activeItem,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -17,30 +24,37 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ triggerText, menuItems, set
     setIsOpen(!isOpen);
   };
 
-  const handleMenuItemClick = (item: string) => {
-    setActive(item); // Set active item when clicked
-    setIsOpen(false); // Close dropdown after clicking an item
-  };
+  const router = useRouter();
+  // const handleMenuItemClick = (item: string) => {
+  //   setActive(item); // Set active item when clicked
+  //   setIsOpen(false); // Close dropdown after clicking an item
+  //   router.push(`/categories?category=${item}`);
+  // };
 
   // Close dropdown when clicking outside of it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   return (
     <div className="relative">
       <button
-        className={`font-bold hover:text-blue-500 ml-5 mt-1 ${activeItem === triggerText ? 'text-blue-500' : 'text-black'}`}
+        className={`font-bold hover:text-blue-500 ml-5 mt-1 ${
+          activeItem === triggerText ? "text-blue-500" : "text-black"
+        }`}
         onClick={toggleDropdown}
       >
         {triggerText}
@@ -52,8 +66,20 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ triggerText, menuItems, set
               {menuItems.map((item, index) => (
                 <div key={index}>
                   <div
-                    className={`px-4 col-span-1 bg-[#fcf6ea] rounded-lg cursor-pointer hover:text-black ${activeItem === item ? 'text-blue-500' : 'text-gray-500'}`}
-                    onClick={() => handleMenuItemClick(item)}
+                    className={`px-4 col-span-1 bg-[#fcf6ea] rounded-lg cursor-pointer hover:text-black ${
+                      activeItem === item ? "text-blue-500" : "text-gray-500"
+                    }`}
+                    onClick={() => {
+                      // router.push(
+                      //   `/categories?category=${item.replace(" ", "-")}`
+                      // );
+                      window.location.href = `/categories?category=${item.replace(
+                        " ",
+                        "-"
+                      )}`;
+                      setActive(item);
+                      setIsOpen(false);
+                    }}
                   >
                     {item}
                   </div>
