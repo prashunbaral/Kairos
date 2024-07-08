@@ -34,7 +34,7 @@ const Navbar = (
             <Link href="/" className="font-bold hover:text-blue-500 mt-1">
               Home
             </Link>
-            <Link href="#" className="font-bold hover:text-blue-500 mt-1 ml-5">
+            <Link href="/about-us" className="font-bold hover:text-blue-500 mt-1 ml-5">
               About Us
             </Link>
             <DropdownMenu
