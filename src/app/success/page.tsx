@@ -5,7 +5,7 @@
     import React, { Suspense, useEffect, useState } from "react";
     import toast from "react-hot-toast";
 
-    const Page = () => {
+    const PageContent = () => {
       const [isError, setIsError] = useState(false);
       const [sessionId, setSessionId] = useState<string | null>(null);
       const searchParams = useSearchParams();
@@ -62,5 +62,13 @@
         </Suspense>
       );
     };
+
+    const Page = () => {
+      return (
+        <Suspense fallback={<p>Loading...</p>}>
+          <PageContent />
+        </Suspense>
+      )
+    }
 
     export default Page;
