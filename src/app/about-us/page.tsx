@@ -1,86 +1,78 @@
-// import Image from 'next/image';
-// import React from 'react'
+'use client'
 
-// const AboutUs = () => {
-//   return (
-//     <div className="about-us bg-gradient-to-r from-orange-100 to-apricot-50 p-10">
-//       <h1 className="text-3xl font-bold text-center text-orange-700 mb-4">
-//         About Kairos: Your Gateway to Inner Peace
-//       </h1>
+import React, { useState } from 'react';
+import Head from 'next/head';
+import Navbar from '@/components/front-end/Navbar';
+import Cart from '@/components/front-end/Cart';
 
-//       <p className="text-lg text-gray-700 mb-8">
-//         At Kairos, we believe in the transformative power of yoga and meditation. We're not just an e-commerce store; we're a passionate community dedicated to helping you cultivate inner peace and well-being through the ancient practices of yoga and meditation.
-//       </p>
+const Page = () => {
+  const [showCart, setShowCart] = useState(false);
 
-//       <section className="flex justify-between mb-8">
-//         <div>
-//           <h3 className="text-2xl font-semibold text-orange-700 mb-4">Our Mission:</h3>
-//           <ul className="list-disc space-y-2 text-gray-700">
-//             <li>Provide high-quality, ethically sourced yogic and meditation products.</li>
-//             <li>Make yoga and meditation accessible to everyone.</li>
-//             <li>Foster a supportive community for your wellness journey.</li>
-//           </ul>
-//         </div>
-//         <div>
-//             <Image 
-//                 src="/about-us.png"
-//                 alt='yoga practice'
-//                 className='w-full rounded-lg shadow-md'
-//                 height={200}
-//                 width={200}
-//             />
-//         </div>
-//       </section>
-
-//       <section className="mb-8">
-//         <h3 className="text-2xl font-semibold text-orange-700 mb-4">Why Choose Kairos?</h3>
-//         <p className="text-gray-700 mb-4">
-//           Curated with Care: We handpick our products based on quality, sustainability, and ethical practices. We want you to feel good about what you're using both on and off the mat.
-//         </p>
-//         <p className="text-gray-700 mb-4">
-//           Expert Insights: Our team is passionate about yoga and meditation. We offer helpful guides, tips, and resources to empower your practice.
-//         </p>
-//         <h5 className="text-lg font-semibold text-orange-700 mb-2">Join the Community:</h5>
-//         <p className="text-gray-700">
-//           Connect with fellow yogis and meditators through our online community. Share experiences, ask questions, and find inspiration from others.
-//         </p>
-//       </section>
-
-//       <section className="mb-8">
-//         <h2 className="text-2xl font-bold text-orange-700 mb-4">Our Story:</h2>
-//         <p className="text-lg text-gray-700">
-//           Kairos was founded by [your name/names] with a simple dream: to make yoga and meditation a part of everyday life for everyone. We believe that these practices hold the key to a happier, healthier, and more fulfilling life.
-//         </p>
-//         <p className="text-lg text-gray-700">
-//           We're committed to providing you with the tools and resources you need to embark on your own wellness journey. Whether you're a seasoned yogi or just starting out, we're here to support you every step of the way.
-//         </p>
-//       </section>
-
-//       <div className="text-center text-orange-700 mb-4">
-//         Join us on this journey to inner peace. Explore our collection of yogic and meditation products and find what resonates with you. Namaste!
-//       </div>
-
-//       {/* <div className="flex justify-center mt-8">
-//         <a
-//           href="your-social-media-link"
-//           className="inline-flex items-center px-4 py-2 bg-orange-500 hover:bg-orange-700 text-white font-bold rounded-lg shadow-md"
-//         >
-//           Connect with Us
-//         </a>
-//       </div> */}
-//     </div>
-//   );
-// };
-
-// export default AboutUs;
-
-
-import React from 'react'
-
-const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <>
+      <Navbar setShowCart={setShowCart} />
+      {showCart && <Cart setShowCart={setShowCart} />}
+      
+      <div className="about-us-page p-5">
+        <Head>
+          <title>About Us - Kairos</title>
+        </Head>
+        
+        <section className="about-section mb-8">
+          <h1 className="text-3xl font-bold mb-4">Our Story</h1>
+          <p className="text-lg leading-relaxed">
+            Welcome to Kairos, where we specialize in offering a curated selection of spiritual and meditation goods. Our journey began with a deep-rooted passion for fostering inner peace and spiritual growth through meaningful products.
+          </p>
+          <p className="text-lg leading-relaxed">
+            At Kairos, we believe in the power of mindfulness and the transformative impact it can have on a life. Our mission is to provide you with tools that inspire reflection, enhance meditation practices, and bring a sense of tranquility to your everyday rituals.
+          </p>
+          <p className="text-lg leading-relaxed">
+            Every item in our collection is carefully chosen to resonate with the essence of spirituality and mindfulness. From healing crystals to sacred art, each product embodies a story waiting to be explored.
+          </p>
+        </section>
+        
+        <section className="mission-section mb-8">
+          <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
+          <p className="text-lg leading-relaxed">
+            Our mission at Kairos is to empower individuals on their spiritual journey by offering products that promote mindfulness, self-discovery, and holistic well-being. We aim to create a space where you can discover meaningful treasures that align with your spiritual path.
+          </p>
+          <p className="text-lg leading-relaxed">
+            By cultivating a community centered around spiritual growth and mindfulness, we aspire to contribute positively to the lives of our customers. We believe that every moment is an opportunity for transformation – a Kairos moment.
+          </p>
+        </section>
+        
+        <section className="vision-section mb-8">
+          <h2 className="text-2xl font-bold mb-4">Our Vision</h2>
+          <p className="text-lg leading-relaxed">
+            At Kairos, we envision a world where spirituality and mindfulness are integral parts of daily life. Through our products and community initiatives, we strive to foster a deeper connection to oneself and to the world around us.
+          </p>
+          <p className="text-lg leading-relaxed">
+            We aspire to be more than a marketplace; we aim to be a source of inspiration and support on your journey towards inner peace and spiritual enlightenment. Together, let us embrace the Kairos moments that lead to profound personal growth.
+          </p>
+        </section>
+        
+        <section className="values-section mb-8">
+          <h2 className="text-2xl font-bold mb-4">Our Values</h2>
+          <ul className="list-disc list-inside text-lg">
+            <li>Authenticity: We believe in offering genuine, high-quality products that resonate with our customers.</li>
+            <li>Community: We foster a supportive community where individuals can share experiences and insights.</li>
+            <li>Integrity: We uphold transparency and ethical practices in everything we do.</li>
+            <li>Inspiration: We aim to inspire personal growth and spiritual exploration through our offerings.</li>
+            <li>Respect: We respect diverse spiritual beliefs and perspectives, embracing inclusivity.</li>
+          </ul>
+        </section>
+        
+        <section className="contact-section mb-8">
+          <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+          <p className="text-lg leading-relaxed">
+            We would love to hear from you! Whether you have a question about our products or want to share your spiritual journey, feel free to reach out to us.
+          </p>
+          <p className="text-lg">Email: info@kairos.com</p>
+          <p className="text-lg">Phone: 1-800-KAIROS1</p>
+        </section>
+      </div>
+    </>
+  );
+};
 
-export default page
+export default Page;
